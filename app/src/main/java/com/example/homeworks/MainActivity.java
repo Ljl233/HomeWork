@@ -1,10 +1,12 @@
 package com.example.homeworks;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.content.Intent;
 import android.widget.Toast;
@@ -19,6 +21,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_signin;
     EditText et_password, et_userName;
+    private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,18 +34,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         btn_signin = findViewById(R.id.btn_signin);
-        et_password = findViewById(R.id.et_password);
         et_userName = findViewById(R.id.et_userName);
+        et_password = findViewById(R.id.et_password);
         btn_signin.setOnClickListener(this);
 
+        sp = getSharedPreferences("UserInfo" , Activity.MODE_PRIVATE);
+        if (sp != null) {
+            String userName = sp.getString("userName", "");
+            String password = sp.getString("password", "");
+            et_userName.setText(userName);
+            et_password.setText(password);
+            CheckBox.setChecked(true);   ///checkbox!!!!!!!!
+        }
     }
-
 
     public void onClick(View v) {
-
         request();
     }
-
 
     private void request() {
         CourseService courseService = RetrofitWrapper.getInstance().create(CourseService.class);
@@ -50,6 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<CourseBean>() {
             @Override
             public void onResponse(Call<CourseBean> call, Response<CourseBean> response) {
+                if (CheckBox.isChecked()&&sp==null) {   ///checkbox!!!!!!!!
+                    String userName = et_userName.getText().toString();
+                    String password = et_password.getText().toString();
+                    SharedPreferences.Editor editor = sp.edit();
+                    editor.putString("userName", userName);
+                    editor.putString("password", password);
+                    editor.commit();
+                }
                 Intent intent = new Intent(MainActivity.this, WorkActivity.class);
                 startActivity(intent);
 
@@ -58,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFailure(Call<CourseBean> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
-                Log.i("!!!!!!!!!!!!!!!!!!!!!!",t.getMessage());
             }
         });
     }
