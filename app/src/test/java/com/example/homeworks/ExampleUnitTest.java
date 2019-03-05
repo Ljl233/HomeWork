@@ -1,4 +1,4 @@
-package com.lool.homeworks;
+package com.example.homeworks;
 
 import org.junit.Test;
 
