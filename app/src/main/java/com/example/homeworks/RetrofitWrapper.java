@@ -29,6 +29,6 @@ public class RetrofitWrapper {
     }
 
     public class Constant {
-        public static final String BASE_URL = "47.102.120.167:2333";
+        public static final String BASE_URL = "http://47.102.120.167:2333";
     }
 }

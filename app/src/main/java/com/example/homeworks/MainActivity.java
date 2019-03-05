@@ -2,6 +2,7 @@ package com.example.homeworks;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initView() {
         btn_signin = findViewById(R.id.btn_signin);
-
+        et_password = findViewById(R.id.et_password);
+        et_userName = findViewById(R.id.et_userName);
         btn_signin.setOnClickListener(this);
 
     }
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onFailure(Call<CourseBean> call, Throwable t) {
                 Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.i("!!!!!!!!!!!!!!!!!!!!!!",t.getMessage());
             }
         });
     }
