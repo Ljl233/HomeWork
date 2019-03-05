@@ -1,27 +1,33 @@
 package com.example.homeworks;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.content.Intent;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.lool.homeworks.CourseBean;
 import com.lool.homeworks.CourseService;
+import com.lool.homeworks.LoginPostData;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity{
     Button btn_signin;
     EditText et_password, et_userName;
     CheckBox remember;
+    TextView forget;
     private SharedPreferences sp;
 
     @Override
@@ -37,46 +43,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btn_signin = findViewById(R.id.btn_signin);
         et_userName = findViewById(R.id.et_userName);
         et_password = findViewById(R.id.et_password);
-        btn_signin.setOnClickListener(this);
-        remember=findViewById(R.id.remember);
+        forget = findViewById(R.id.forget);
+        remember = findViewById(R.id.remember);
+
+        btn_signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                request();
+            }
+        });
+
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse("http://spoc.ccnu.edu.cn/user/v1/getRetrievePassword?userName=")
+                );
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
 
         sp = getSharedPreferences("UserInfo" , Activity.MODE_PRIVATE);
-        if (sp != null) {
+        if (sp != null || remember.isChecked()) {
             String userName = sp.getString("userName", "");
             String password = sp.getString("password", "");
             et_userName.setText(userName);
             et_password.setText(password);
-            remember.setChecked(true);   ///checkbox!!!!!!!!
+            remember.setChecked(true);
         }
-    }
-
-    public void onClick(View v) {
-        request();
     }
 
     private void request() {
         CourseService courseService = RetrofitWrapper.getInstance().create(CourseService.class);
-        Call<CourseBean> call = courseService.getCourseBean(et_userName.getText().toString(), et_password.getText().toString());
+        Call<CourseBean> call = courseService.getCourseBean(new LoginPostData(et_userName.getText().toString(), et_password.getText().toString()));
         call.enqueue(new Callback<CourseBean>() {
             @Override
             public void onResponse(Call<CourseBean> call, Response<CourseBean> response) {
-                if (remember.isChecked()&&sp==null) {   ///checkbox!!!!!!!!
-                    String userName = et_userName.getText().toString();
-                    String password = et_password.getText().toString();
-                    SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("userName", userName);
-                    editor.putString("password", password);
-                    editor.commit();
-                }
-                Intent intent = new Intent(MainActivity.this, WorkActivity.class);
-                startActivity(intent);
-
+                if (response.isSuccessful()) {
+                    if (response.body().getCode() == "1") {
+                        Log.d(response.body().getUserInfo().getUserName(),"      ----username");
+                        Log.d(response.body().getUserInfo().getRealName(),"      ----realname");
+                        if (remember.isChecked() && sp == null)
+                            SaveUserInfo();
+                        Intent intent = new Intent(MainActivity.this, WorkActivity.class);
+                        startActivity(intent);
+                    } else GetWrong();
+                }else GetWrong();
             }
 
             @Override
             public void onFailure(Call<CourseBean> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                GetWrong();
             }
         });
+    }
+
+    public void SaveUserInfo() {
+        String userName = et_userName.getText().toString();
+        String password = et_password.getText().toString();
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("userName", userName);
+        editor.putString("password", password);
+        editor.commit();
+    }
+
+    public void GetWrong() {
+        AlertDialog.Builder Wrong = new AlertDialog.Builder(MainActivity.this);
+        Wrong.setTitle("登陆失败");
+        Wrong.setMessage("学号或密码错误，请重新输入。");
+        Wrong.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                et_userName.getText().clear();
+                et_password.getText().clear();
+            }
+        });
+        Wrong.show();
     }
 }
