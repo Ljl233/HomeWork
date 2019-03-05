@@ -21,6 +21,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button btn_signin;
     EditText et_password, et_userName;
+    CheckBox remember;
     private SharedPreferences sp;
 
     @Override
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         et_userName = findViewById(R.id.et_userName);
         et_password = findViewById(R.id.et_password);
         btn_signin.setOnClickListener(this);
+        remember=findViewById(R.id.remember);
 
         sp = getSharedPreferences("UserInfo" , Activity.MODE_PRIVATE);
         if (sp != null) {
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String password = sp.getString("password", "");
             et_userName.setText(userName);
             et_password.setText(password);
-            CheckBox.setChecked(true);   ///checkbox!!!!!!!!
+            remember.setChecked(true);   ///checkbox!!!!!!!!
         }
     }
 
@@ -58,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         call.enqueue(new Callback<CourseBean>() {
             @Override
             public void onResponse(Call<CourseBean> call, Response<CourseBean> response) {
-                if (CheckBox.isChecked()&&sp==null) {   ///checkbox!!!!!!!!
+                if (remember.isChecked()&&sp==null) {   ///checkbox!!!!!!!!
                     String userName = et_userName.getText().toString();
                     String password = et_password.getText().toString();
                     SharedPreferences.Editor editor = sp.edit();

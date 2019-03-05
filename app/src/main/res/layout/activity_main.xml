@@ -17,6 +17,8 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:layout_margin="2dp"
+        android:gravity="center"
         android:text="HomeWorks"
         android:textColor="#ff4db6ac"
         android:textSize="40sp" />
@@ -75,20 +77,22 @@
         android:id="@+id/btn_signin"
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        style="@style/Button"
-        android:text="登 录"
-
+        android:background="@color/colormain"
+        android:text="@string/login"
         android:textColor="#ffffffff"
         android:textSize="32sp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/remember"
             android:layout_width="163dp"
             android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
             android:text="@string/remember"
             android:textColor="#ff4db6ac" />
 
@@ -96,13 +100,14 @@
             android:id="@+id/forget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
             android:clickable="true"
-            android:gravity="end"
             android:text="@string/forget"
             android:textColor="#ff4db6ac"
             android:textSize="15dp"
 
             />
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>
