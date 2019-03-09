@@ -15,16 +15,16 @@ public class RetrofitWrapper {
                 .build();
     }
 
-    public static RetrofitWrapper getInstance(){
-        if (instance == null ){
-            synchronized (RetrofitWrapper.class){
+    public static RetrofitWrapper getInstance() {
+        if (instance == null) {
+            synchronized (RetrofitWrapper.class) {
                 instance = new RetrofitWrapper();
             }
         }
         return instance;
     }
 
-    public <T> T create (Class<T> service){
+    public <T> T create(Class<T> service) {
         return retrofit.create(service);
     }
 
