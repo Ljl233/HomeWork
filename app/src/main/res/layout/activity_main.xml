@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/home_page" />
+        android:src="@drawable/home_page"/>
 
     <TextView
         android:layout_width="match_parent"
