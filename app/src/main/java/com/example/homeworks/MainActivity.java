@@ -73,6 +73,8 @@ public class MainActivity extends AppCompatActivity{
             et_password.setText(password);
             remember.setChecked(true);
         }
+
+
     }
 
     private void request() {
