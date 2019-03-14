@@ -2,25 +2,20 @@ package com.lool.homeworks;
 
 public class CourseBean {
 
+
     /**
-     * code : int
      * msg : String
      * cookie : String
-     * userInfo : {"userName":"String","realName":"String","userId":"String"}
+     * token : String
+     * userName : String
+     * realName : String
      */
 
-    private String code;
     private String msg;
     private String cookie;
-    private UserInfoBean userInfo;
-
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
+    private String token;
+    private String userName;
+    private String realName;
 
     public String getMsg() {
         return msg;
@@ -38,47 +33,27 @@ public class CourseBean {
         this.cookie = cookie;
     }
 
-    public UserInfoBean getUserInfo() {
-        return userInfo;
+    public String getToken() {
+        return token;
     }
 
-    public void setUserInfo(UserInfoBean userInfo) {
-        this.userInfo = userInfo;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public static class UserInfoBean {
-        /**
-         * userName : String
-         * realName : String
-         * userId : String
-         */
+    public String getUserName() {
+        return userName;
+    }
 
-        private String userName;
-        private String realName;
-        private String userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-        public String getUserName() {
-            return userName;
-        }
+    public String getRealName() {
+        return realName;
+    }
 
-        public void setUserName(String userName) {
-            this.userName = userName;
-        }
-
-        public String getRealName() {
-            return realName;
-        }
-
-        public void setRealName(String realName) {
-            this.realName = realName;
-        }
-
-        public String getUserId() {
-            return userId;
-        }
-
-        public void setUserId(String userId) {
-            this.userId = userId;
-        }
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

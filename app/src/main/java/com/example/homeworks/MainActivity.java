@@ -84,9 +84,9 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<CourseBean> call, Response<CourseBean> response) {
                 if (response.isSuccessful()) {
-                    if (response.body().getCode() == "1") {
-                        Log.d(response.body().getUserInfo().getUserName(),"      ----username");
-                        Log.d(response.body().getUserInfo().getRealName(),"      ----realname");
+                    if (response.body().getMsg() == "1") {
+                        Log.d(response.body().getUserName(),"      ----username");
+                        Log.d(response.body().getRealName(),"      ----realname");
                         if (remember.isChecked() && sp == null)
                             SaveUserInfo();
                         Intent intent = new Intent(MainActivity.this, WorkActivity.class);
