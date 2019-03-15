@@ -6,4 +6,6 @@
     <string name="ddl">截止时间：%1$s</string>
     <string name="begin">开始时间：%1$s</string>
     <string name="tv_assignName">%1$s</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
