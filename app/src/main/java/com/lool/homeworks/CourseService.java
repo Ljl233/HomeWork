@@ -7,8 +7,14 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-
+/*
 public interface CourseService {
-    @POST("api/login")
+    @POST("api/login/")
+    @FormUrlEncoded
+    Call<CourseBean> getCourseBean(@Field("userName") String userName , @Field("password") String password);
+}
+*/
+public interface CourseService {
+    @POST("api/login/")
     Call<CourseBean> getCourseBean(@Body LoginPostData loginPostData);
 }

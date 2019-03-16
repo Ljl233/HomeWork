@@ -84,11 +84,9 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onResponse(Call<CourseBean> call, Response<CourseBean> response) {
                 if (response.isSuccessful()) {
-                    Log.d(response.body().getUserName(),"      ----username");
-                    Log.d(response.body().getRealName(),"      ----realname");
                     if (remember.isChecked() && sp == null)
                         SaveUserInfo();
-                    Intent intent = new Intent(MainActivity.this, WorkActivity.class);
+                    Intent intent = new Intent(MainActivity.this, CourseAndTaskActivity.class);
                     startActivity(intent);
                 } else GetWrong();
             }

@@ -56,7 +56,8 @@ public class AssignActivity extends AppCompatActivity {
 
     private void request() {
         AssignListService assignListService = RetrofitWrapper.getInstance().create(AssignListService.class);
-        Call<TasksBean> call = assignListService.getTasksBean(new CourseBean().getCookie(), new CourseBean().getToken());
+        String siteId = getIntent().getStringExtra("siteId");
+        Call<TasksBean> call = assignListService.getTasksBean(siteId,new CourseBean().getCookie(), new CourseBean().getToken());
         call.enqueue(new Callback<TasksBean>() {
             @Override
             public void onResponse(Call<TasksBean> call, Response<TasksBean> response) {
