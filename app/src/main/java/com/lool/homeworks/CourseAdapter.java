@@ -22,6 +22,10 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         ImageView iv_course_image;
         TextView tv_course_name;
 
+        public void bind(Course course){
+            course.getImageId();
+        }
+
         public ViewHolder(View view) {
             super(view);
             courseView = view;
@@ -63,6 +67,8 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         Course course = mCourseList.get(position);
         holder.iv_course_image.setImageResource(course.getImageId());
         holder.tv_course_name.setText(course.getName());
+
+        holder.bind(mCourseList.get(position));
     }
 
 

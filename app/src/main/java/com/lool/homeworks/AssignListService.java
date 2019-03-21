@@ -8,7 +8,8 @@ import retrofit2.http.Header;
 import retrofit2.http.Path;
 
 public interface AssignListService {
-    @GET("api/course/{siteId: string}/assignment/list")
-    Call<TasksBean> getTasksBean(@Path ("siteId: string") String siteId, @Header("cookie") String cookie,
+    @GET("api/course/{siteId}/assignment/list")
+    Call<TasksBean> getTasksBean(@Path("siteId") String siteId,
+                                 @Header("cookie") String cookie,
                                  @Header("token") String token);
 }
