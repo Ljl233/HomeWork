@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,6 +15,7 @@ import com.example.homeworks.CourseAndTaskActivity;
 import com.example.homeworks.R;
 import com.example.homeworks.RetrofitWrapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -21,10 +24,12 @@ import retrofit2.Response;
 
 public class DetailActivity extends AppCompatActivity {
     TextView tv_begin2, tv_ddl2, tv_state, tv_content, tv_pointNum, tv_studentNum, tv_submitContent,
-            tv_feedback, tv_assignAttachmentNum, tv_assignAttachment_name, tv_assignName2;
+            tv_feedback, tv_assignAttachmentNum, tv_assignAttachment_name, tv_assignName2,tv_submitAttachmentNum;
 
     String siteId, assignId, cookie, token;
+    ListView listView;
 
+   DetailAdapter detailAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,8 +42,8 @@ public class DetailActivity extends AppCompatActivity {
     void initView() {
         Toolbar toolbar_detail = findViewById(R.id.toolbar_detail);
 
-        tv_assignAttachment_name = findViewById(R.id.tv_assignAttachment_name);
-        tv_assignAttachmentNum = findViewById(R.id.tv_assignAttachmentNum);
+        listView=findViewById(R.id.listView);
+
         tv_begin2 = findViewById(R.id.tv_begin2);
         tv_ddl2 = findViewById(R.id.tv_ddl2);
         tv_state = findViewById(R.id.tv_state);
@@ -48,6 +53,9 @@ public class DetailActivity extends AppCompatActivity {
         tv_feedback = findViewById(R.id.tv_feedback);
         tv_studentNum = findViewById(R.id.tv_studentNum);
         tv_assignName2 = findViewById(R.id.tv_assignName2);
+        tv_submitAttachmentNum=findViewById(R.id.tv_submitAttachmentNum);
+
+
 
         setSupportActionBar(toolbar_detail);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -99,9 +107,9 @@ public class DetailActivity extends AppCompatActivity {
         tv_assignName2.append(detail.getAssignName());
 
 
-        if (detail.getStatus() == "0") tv_state.append("未提交");
-        else if (detail.getStatus() == "1") tv_state.append("待批阅");
-        else if (detail.getStatus() == "2") tv_state.append("已驳回");
+        if (detail.getStatus().equals("0")) tv_state.append("未提交");
+        else if (detail.getStatus().equals("1")) tv_state.append("待批阅");
+        else if (detail.getStatus().equals("2")) tv_state.append("已驳回");
         else tv_state.append("已批阅");
 
         tv_content.append(detail.getContent());
@@ -109,6 +117,11 @@ public class DetailActivity extends AppCompatActivity {
         tv_studentNum.append(detail.getStudentNum());
         tv_submitContent.append(detail.getSubmitContent());
         tv_feedback.append(detail.getFeedback());
+        tv_submitAttachmentNum.append(detail.getSubmitAttachmentNum());
+
+        List<DetailBean.SubmitAttachmentBean> submitAttachmentBeanList = detail.getSubmitAttachment();
+        detailAdapter = new DetailAdapter(this,submitAttachmentBeanList);
+        listView.setAdapter(detailAdapter);
 
 
     }

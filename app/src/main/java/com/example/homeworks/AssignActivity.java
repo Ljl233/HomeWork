@@ -1,11 +1,13 @@
 package com.example.homeworks;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -33,11 +35,24 @@ public class AssignActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = new Intent(AssignActivity.this, CourseAndTaskActivity.class);
+                startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
     private void init() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         recyclerView = findViewById(R.id.task_recycle_view);
 
         setSupportActionBar(toolbar);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
         request();
 
@@ -57,7 +72,7 @@ public class AssignActivity extends AppCompatActivity {
     private void request() {
         AssignListService assignListService = RetrofitWrapper.getInstance().create(AssignListService.class);
         String siteId = getIntent().getStringExtra("siteId");
-        Call<TasksBean> call = assignListService.getTasksBean(siteId,new CourseBean().getCookie(), new CourseBean().getToken());
+        Call<TasksBean> call = assignListService.getTasksBean(siteId, new CourseBean().getCookie(), new CourseBean().getToken());
         call.enqueue(new Callback<TasksBean>() {
             @Override
             public void onResponse(Call<TasksBean> call, Response<TasksBean> response) {

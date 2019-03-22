@@ -7,15 +7,15 @@
     android:orientation="vertical"
 
     >
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_detail"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:navigationIcon="@mipmap/back_arrow"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        />
+        app:navigationIcon="@mipmap/back_arrow"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
     <LinearLayout
@@ -29,7 +29,7 @@
         <TextView
             android:id="@+id/tv_assignName2"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
+            android:layout_height="54dp"
             android:layout_gravity="center"
             android:background="#3F51B5"
             android:gravity="center"
@@ -123,7 +123,7 @@
             android:textSize="28sp" />
 
         <TextView
-            android:id="@+id/tv_assignAttachmentNum"
+            android:id="@+id/tv_submitAttachmentNum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
@@ -131,13 +131,16 @@
             android:textColor="#000000"
             android:textSize="28sp" />
 
-        <TextView
-            android:id="@+id/tv_assignAttachment_name"
+
+        <ListView
+            android:id="@+id/listView"
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="12dp"
-            android:text="加油.pptx"
-            android:textSize="28sp" />
+            android:scrollbars="none">
+
+        </ListView>
 
 
     </LinearLayout>
